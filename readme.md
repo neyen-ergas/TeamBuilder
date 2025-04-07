@@ -69,18 +69,18 @@ El producto será una aplicación de consola escrita en Python, utilizando archi
 
 ## Entregables
 
-### 🔹 Entregable 40% – Versión Inicial
+### Entregable 40% – Versión Inicial
 **Objetivo:** Sistema básico funcional para cargar jugadores y armar equipos.
 
 **Características:**
 - Gestión de jugadores: alta, baja, edición, visualización.
-- Guardado de datos en JSON.
+- Guardado de datos en archivos.
 - Selección de jugadores para un partido.
 - Algoritmo simple de armado de equipos (por promedio de rating).
 - Menú interactivo en consola.
 - Modularización inicial del código.
 
-### 🔸 Entregable 80% – Versión Intermedia
+### Entregable 80% – Versión Intermedia
 **Objetivo:** Sistema funcional casi completo con registro de partidos y actualización de stats.
 
 **Características:**
@@ -90,10 +90,9 @@ El producto será una aplicación de consola escrita en Python, utilizando archi
 - Actualización automática de estadísticas (rating, promedio, partidos jugados).
 - Visualización de rankings y tabla de goleadores.
 - Mejoras en el algoritmo de balance (ponderación por racha).
-- Pruebas unitarias básicas para cálculo de stats.
 - Validaciones de entradas (formato, existencia, etc.).
 
-### 🔹 Entregable 100% – Versión Final
+### Entregable 100% – Versión Final
 **Objetivo:** Producto terminado, estable, probado y listo para presentación.
 
 **Características:**
