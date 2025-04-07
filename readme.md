@@ -32,7 +32,7 @@ El objetivo es brindar una herramienta práctica y entretenida para organizar pa
 - El sistema arma dos equipos lo más parejos posible (según rating, promedio, racha, etc.).
 - Se registra el resultado del partido (goles, calificaciones, goles individuales).
 - Las estadísticas de los jugadores se actualizan automáticamente.
-- Todo se guarda en archivos JSON.
+- Todo se guarda en archivos.
 
 ---
 
@@ -69,7 +69,6 @@ El objetivo es brindar una herramienta práctica y entretenida para organizar pa
 - Gestión de jugadores.
 - Selección de jugadores.
 - Armado simple de equipos.
-- Persistencia básica.
 - Menú por consola.
 
 ### 80% - Versión Intermedia
