@@ -1,7 +1,7 @@
 # Proyecto TeamBuilder: ALGORITMOS Y ESTRUCTURAS DE DATOS I
 
 ## Integrantes:
-- Nicolás Diez - LU:
+- Nicolás Diez - LU: 1157582
 - Lucio Dillon - LU: 1156126
 - Neyen Ergas - LU: 1209504
 - Iván Rapisarda - LU: 1055142
