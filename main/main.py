@@ -3,11 +3,10 @@
 def main():
     print("------Bienvenido a la aplicación de TeamBuilder------")
     print("¿Que acción quiere realizar?")
-    print("1. Alta de jugador")
-    print("2. Baja de jugador")
-    print("3. Listado de jugadores")
-    print("4. Armar equipos")
-    print("5. Salir")
+    print("1. Crear Partido")
+    print("2. Administración de jugadores")
+    print("3. Estadísticas")
+    print("4. Salir")
 
     n = int(input("Ingresar acción: "))
 
