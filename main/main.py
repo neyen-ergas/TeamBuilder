@@ -1,4 +1,3 @@
-
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -8,6 +7,10 @@ from functions.creadorEquipos import creadorEquipos
 def menuCrearPartido():
     #TODO print("¿Que plantilla quiere usar?")
     #TODO algoritmo de seleccion de jugadores
+    print()
+    print()
+    print()
+    print()
     print("¿Que acción quiere realizar?") #seleccionar plantilla??
     print("1. Crear Partido")
     print("2. Volver al menú principal")
@@ -38,10 +41,13 @@ def crearPartido():
 
     if j.numJugadores > num * 2:
         print("Van a haber suplentes, se seleccionarán al azar.")
+        creadorEquipos()
     else:
         creadorEquipos()
 
 def menuJugadores():
+    print()
+    print()
     print("¿Que acción quiere realizar?") #seleccionar plantilla??
     print("1. Mostrar lista de jugadores")
     print("2. Alta de jugador")
@@ -109,7 +115,7 @@ main()
 # def menuEstadisticas():
 #     print("¿De qué quiere ver estadísticas?")
 #     print("1. Estadísticas de jugadores")
-#     #print("2. Estadísticas de plantilla") #????
+#     #print("2. Estadísticas de plantilla") 
 #     print("3. Volver al menú principal")
 
 #     n = int(input("Ingresar acción: "))
