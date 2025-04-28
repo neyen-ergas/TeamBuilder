@@ -15,4 +15,3 @@ def creadorEquipos(jugadores):
             puntaje2 += jugador[4]
 
     return equipo1, equipo2, puntaje1, puntaje2
-#test
