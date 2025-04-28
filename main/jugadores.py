@@ -1,3 +1,8 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from src  import jugadoresEjemplo
+
 def jugadoresListaADiccionario(jugadoresLista):
     """
     Convierte una lista de listas de jugadores en una lista de diccionarios.
@@ -14,17 +19,24 @@ def jugadoresListaADiccionario(jugadoresLista):
     for j in jugadoresLista:
         jugador = {
             "nombre": j[0],
-            "apellido": j[1],
+            "apellido":j[1],
             "edad": j[2],
             "posicion": j[3],
             "partidos": j[4],
             "goles": j[5],
             "asistencias": j[6],
             "rating": j[7]
-        }
+     }
         jugadores_dicc.append(jugador)
 
     return jugadores_dicc
+
+jugadores= jugadoresListaADiccionario(jugadoresEjemplo.jugadores)
+
+numJugadores = len(jugadores)
+
+
+#TODO agregar ids jugadores
 
 def mostrarLista():
     """
@@ -37,11 +49,12 @@ def mostrarLista():
         return
 
     print("Lista de jugadores:")
-    for i, jugador in enumerate(jugadores, start=1):
-        print(f"{i}. Nombre: {jugador['nombre']},{jugador['apellido']}, Edad: {jugador['edad']}, "
+    for i, jugador in enumerate(jugadores, start = 1):
+      print(f"{i}. Nombre: {jugador['nombre']},{jugador['apellido']}, Edad: {jugador['edad']}, "
               f"Posición: {jugador['posicion']}, Partidos: {jugador['partidos']}, "
               f"Goles: {jugador['goles']}, Asistencias: {jugador['asistencias']}")
     print()
+
 
 def altaJugador():
     """
@@ -56,6 +69,8 @@ def altaJugador():
             break
         else:
             print("El nombre debe contener solo letras. Intente nuevamente.")
+        nombre = input("Nombre del jugador: ")
+
 
     while True:
         apellido = input("Apellido del jugador: ")
@@ -63,14 +78,19 @@ def altaJugador():
             break
         else:
             print("El apellido debe contener solo letras. Intente nuevamente.")
+        apellido = input("Apellido del jugador: ")
+
+    
 
     while True:
         edadInput = input("Edad del jugador: ")
+        edad = 0
         if edadInput.isdigit():
             edad = int(edadInput)
             break
         else:
             print("La edad debe ser un número entero. Intente nuevamente.")
+
 
     while True:
         print("Posición del jugador: ")
@@ -96,8 +116,17 @@ def altaJugador():
                 break
             else:
                 print("Error. Intente nuevamente.")
+                print("1. ARQ")
+                print("2. DEF")
+                print("3. MC")
+                print("4. DEL")
         else:
             print("Ingrese una opción válida.")
+            print("1. ARQ")
+            print("2. DEF")
+            print("3. MC")
+            print("4. DEL")
+            posInput = input("Ingresar posición: ")
 
     partidos = 0
     goles = 0
@@ -158,17 +187,19 @@ def editarJugador():
     print("Jugador no encontrado.")
 
 def bajaJugador():
+
     """
     Permite eliminar un jugador de la lista buscando por nombre y apellido.
 
     Si el jugador no se encuentra, informa al usuario.
     """
+
     if not jugadores:
         print("No hay jugadores cargados para eliminar.")
         return
 
     nombre_buscar = input("Ingrese el nombre del jugador que quiere eliminar: ")
-    apellido_buscar = input("Ingrese el apellido del jugador que quiere eliminar: ")
+    apellido_buscar = input("Ingrese el apellido del jugador que quiere editar: ")
 
     for i, jugador in enumerate(jugadores):
         if jugador['nombre'].lower() == nombre_buscar.lower() and jugador['apellido'].lower() == apellido_buscar.lower():
