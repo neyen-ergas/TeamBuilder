@@ -4,6 +4,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from functions.armado import seleccionJugadoresEquipo, creadorEquipos
 from functions.archivos import manejoJson
 from functions.jugadores import jugadores as j
+from functions.ratings import top5
 
 
 def menuCrearPartido():
@@ -16,6 +17,7 @@ def menuCrearPartido():
     print("¿Que acción quiere realizar?") #seleccionar plantilla??
     print("1. Crear Partido")
     print("2. Volver al menú principal")
+    
 
     n = int(input("Ingresar acción: "))
     while n != 1 and n != 2:
@@ -115,8 +117,8 @@ def main():
     print("¿Que acción quiere realizar?")
     print("1. Crear Partido")
     print("2. Administración de jugadores")
-    # print("3. Estadísticas")                     #TODO
-    print("3. Salir")
+    print("3. Estadísticas")                   
+    print("4. Salir")
     
 
     n = int(input("Ingresar acción: "))
@@ -128,27 +130,54 @@ def main():
         menuCrearPartido()
     elif n == 2:
         menuJugadores()
-    # elif n == 3:            #TODO
-    #     menuEstadisticas()
+    elif n == 3:            
+        menuEstadisticas()
     else:
         print("¡Hasta pronto!")
+
+def menuEstadisticas():
+
+    print("¿De qué quiere ver estadísticas?")
+    print("1. Top 5 goleadores")
+    print("2. Top 5 asistidores") 
+    print("3. Top 5 más activos")
+    print("4. Top 5 mas ganadores")
+    print("5. Top 5 mas perdedores")
+    print("6. Volver atras")
+
+    n = int(input("Ingresar acción: "))
+    if   n == 1:
+        top5.goleadores()
+        print("1. Volver atras")
+        n2 = int(input("Escriba '1' para volver atras: "))
+        if   n2 == 1:
+            menuEstadisticas()
+    elif n == 2:
+        top5.asistidores()
+        print("1. Volver atras")
+        n2 = int(input("Escriba '1' para volver atras: "))
+        if   n2 == 1:
+            menuEstadisticas()
+    elif n == 3:
+        top5.activos()
+        print("1. Volver atras")
+        n2 = int(input("Escriba '1' para volver atras: "))
+        if   n2 == 1:
+            menuEstadisticas()
+    elif n == 4:
+        top5.ganadores()
+        print("1. Volver atras")
+        n2 = int(input("Escriba '1' para volver atras: "))
+        if   n2 == 1:
+            menuEstadisticas()
+    elif n == 5:
+        top5.perdedores()
+        print("1. Volver atras")
+        n2 = int(input("Escriba '1' para volver atras: "))
+        if   n2 == 1:
+            menuEstadisticas()
+    elif n == 6:
+        main()
     
 
 main()
-
-
-#TODO
-
-# def menuEstadisticas():
-#     print("¿De qué quiere ver estadísticas?")
-#     print("1. Estadísticas de jugadores")
-#     #print("2. Estadísticas de plantilla") 
-#     print("3. Volver al menú principal")
-
-#     n = int(input("Ingresar acción: "))
-#     if n == 1:
-#         menuCrearPartido()
-#     elif n == 2:
-#         menuJugadores()
-#     elif n == 3:
-#         menuEstadisticas()
