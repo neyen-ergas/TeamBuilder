@@ -33,7 +33,7 @@ def menuCrearPartido():
 def crearPartido():
 
     if os.path.exists("registroPartido.json"):
-        os.remove("registroPatido.json")
+        os.remove("registroPartido.json")
 
     print("\n=== CREAR PARTIDO ===")
     print("¿Cuántos jugadores por equipo? (5 a 11)")
