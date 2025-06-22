@@ -1,7 +1,8 @@
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from functions.armado import creadorEquipos,seleccionJugadoresEquipo
+from functions.armado import seleccionJugadoresEquipo, creadorEquipos
+from functions.archivos import manejoJson
 from functions.jugadores import jugadores as j
 
 
@@ -28,33 +29,46 @@ def menuCrearPartido():
 
     
 def crearPartido():
-    print("¿De cuantos jugadores van a ser los equipos?") #doy opciones? dejo que el usuario elija y desp checkeo?
-    print("¿5, 6, 7, 8, 9, 10 u 11?")
-    num = int(input("Ingresar cantidad de jugadores por equipo: "))
-    while num < 5 or num > 11:
-        print("Número no válido.")
-        num = int(input("Ingresar cantidad de jugadores por equipo: "))
-
-
-    while j.numJugadores < num * 2:
-        print("No hay suficientes jugadores en la plantilla para hacer 2 equipos de", num, "jugadores, elija un número menor.")
-        num = int(input("Ingresar cantidad de jugadores por equipo: "))
-
-    if j.numJugadores >= num * 2:
-       jugadoresPartido=seleccionJugadoresEquipo.agregar_jugador_a_partido(num*2)
-       equipo1, equipo2, puntaje1, puntaje2=creadorEquipos.creadorEquipos(jugadoresPartido)
-       print("=" * 40)
-       print(f"{'Equipos de Fútbol':^40}")
-       print("=" * 40)
-       print(f"{'Equipo 1':<20} {'Equipo 2':<20}")
-       print("-" * 40)
-       for j1, j2 in zip(equipo1, equipo2):
-           print(f"{j1:<20} {j2:<20}")
-       print("-" * 40)
-       print(f"{'Promedio Equipo 1:':<20} {puntaje1:<20.1f}")
-       print(f"{'Promedio Equipo 2:':<20} {puntaje2:<20.1f}")
-       print("=" * 40)
+    print("\n=== CREAR PARTIDO ===")
+    print("¿Cuántos jugadores por equipo? (5 a 11)")
     
+    while True:
+        try:
+            num = int(input("Ingresar cantidad: "))
+            if 5 <= num <= 11:
+                break
+            else:
+                print("❌ Debe estar entre 5 y 11.")
+        except ValueError:
+            print("❌ Ingresá un número válido.")
+
+    total_jugadores = len(manejoJson.cargar_jugadores())
+
+    while total_jugadores < num * 2:
+        print(f"⚠️ No hay suficientes jugadores para 2 equipos de {num}. (Total disponibles: {total_jugadores})")
+        try:
+            num = int(input("Elegí un número menor de jugadores por equipo: "))
+            if num < 5 or num > 11:
+                print("❌ Número fuera de rango (5-11).")
+        except ValueError:
+            print("❌ Ingresá un número válido.")
+
+    jugadoresPartido = seleccionJugadoresEquipo.agregar_jugador_a_partido(num * 2)
+    equipo1, equipo2, puntaje1, puntaje2 = creadorEquipos.creadorEquipos(jugadoresPartido)
+
+    print("\n" + "=" * 40)
+    print(f"{'Equipos de Fútbol':^40}")
+    print("=" * 40)
+    print(f"{'Equipo 1':<20} {'Equipo 2':<20}")
+    print("-" * 40)
+
+    for j1, j2 in zip(equipo1, equipo2):
+        print(f"{j1:<20} {j2:<20}")
+
+    print("-" * 40)
+    print(f"{'Promedio Equipo 1:':<20} {puntaje1:<20.1f}")
+    print(f"{'Promedio Equipo 2:':<20} {puntaje2:<20.1f}")
+    print("=" * 40)
         
 
 
@@ -74,7 +88,7 @@ def menuJugadores():
         n = int(input("Ingresar acción: "))
 
     if n == 1:
-        j.mostrarLista()
+        j.mostrar_lista()
         menuJugadores()
     elif n == 2:
         j.altaJugador()

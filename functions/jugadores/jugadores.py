@@ -1,181 +1,177 @@
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from src  import jugadoresEjemplo
 
-def jugadoresListaADiccionario(jugadoresLista):
-    jugadores_dicc = []
-    for j in jugadoresLista:
-        jugador = {
-            "nombre": j[0],
-            "apellido":j[1],
-            "edad": j[2],
-            "posicion": j[3],
-            "partidos": j[4],
-            "goles": j[5],
-            "asistencias": j[6],
-            "rating": j[7]
-     }
-        jugadores_dicc.append(jugador)
-
-    return jugadores_dicc
-
-jugadores= jugadoresListaADiccionario(jugadoresEjemplo.jugadores)
-
-numJugadores = len(jugadores)
+from functions.archivos import manejoJson
 
 
 #TODO agregar ids jugadores
 
-def mostrarLista():
+def mostrar_lista():
+    jugadores = manejoJson.cargar_jugadores()
     if not jugadores:
         print("No hay jugadores cargados.")
         return
 
     print("Lista de jugadores:")
-    for i, jugador in enumerate(jugadores, start = 1):
-      print(f"{i}. Nombre: {jugador['nombre']},{jugador['apellido']}, Edad: {jugador['edad']}, "
-              f"Posición: {jugador['posicion']}, Partidos: {jugador['partidos']}, "
+    for i, jugador in enumerate(jugadores, start=1):
+        print(f"{i}. Nombre: {jugador['nombre']} {jugador['apellido']}, Edad: {jugador['edad']}, "
+              f"Posición: {jugador['posición']}, Partidos: {jugador['partidos_jugados']}, "
               f"Goles: {jugador['goles']}, Asistencias: {jugador['asistencias']}")
     print()
 
+def cantidad_jugadores():
+    return len(manejoJson.cargar_jugadores())
 
 def altaJugador():
+    jugadores = manejoJson.cargar_jugadores()
+
+    print("\n--- Alta de nuevo jugador ---")
+
+    # Validar nombre
     while True:
-        nombre = input("Nombre del jugador: ")
+        nombre = input("Nombre del jugador: ").strip().capitalize()
         if nombre.isalpha():
             break
-        else:
-            print("El nombre debe contener solo letras. Intente nuevamente.")
-        nombre = input("Nombre del jugador: ")
+        print("El nombre debe contener solo letras.")
 
-
+    # Validar apellido
     while True:
-        apellido = input("Apellido del jugador: ")
+        apellido = input("Apellido del jugador: ").strip().capitalize()
         if apellido.isalpha():
             break
-        else:
-            print("El apellido debe contener solo letras. Intente nuevamente.")
-        apellido = input("Apellido del jugador: ")
+        print("El apellido debe contener solo letras.")
 
-    
+    # Evitar duplicados
+    for j in jugadores:
+        if j["nombre"] == nombre and j["apellido"] == apellido:
+            print("⚠️ Ya existe un jugador con ese nombre y apellido.")
+            return
 
+    # Edad
     while True:
-        edadInput = input("Edad del jugador: ")
-        edad = 0
-        if edadInput.isdigit():
-            edad = int(edadInput)
+        edad_input = input("Edad del jugador: ").strip()
+        if edad_input.isdigit():
+            edad = int(edad_input)
             break
-        else:
-            print("La edad debe ser un número entero. Intente nuevamente.")
+        print("La edad debe ser un número.")
 
+    # Posición
+    print("Posición del jugador:")
+    print("1. ARQ\n2. DEF\n3. MC\n4. DEL")
+    opciones_pos = {"1": "ARQ", "2": "DEF", "3": "MC", "4": "DEL"}
 
     while True:
-        print("Posición del jugador: ")
-        print("1. ARQ")
-        print("2. DEF")
-        print("3. MC")
-        print("4. DEL")
-        posInput = input("Ingresar posición: ")
+        posInput = input("Seleccionar posición (1-4): ").strip()
+        if posInput in opciones_pos:
+            posicion = opciones_pos[posInput]
+            break
+        print("Opción inválida. Elegí 1, 2, 3 o 4.")
 
-        if posInput.isdigit():
-            posicion = int(posInput)
-            if posicion == 1:
-                posicion = 'ARQ'
-                break
-            elif posicion == 2:
-                posicion = 'DEF'
-                break
-            elif posicion == 3:
-                posicion = 'MC'
-                break
-            elif posicion == 4:
-                posicion = 'DEL'
-                break
-            else:
-                print("Error. Intente nuevamente.")
-                print("1. ARQ")
-                print("2. DEF")
-                print("3. MC")
-                print("4. DEL")
-        else:
-            print("Ingrese una opción válida.")
-            print("1. ARQ")
-            print("2. DEF")
-            print("3. MC")
-            print("4. DEL")
-            posInput = input("Ingresar posición: ")
-
-    partidos = 0
-    goles = 0
-    asistencias = 0
-    rating = 0
-
+    # Crear jugador nuevo
     jugador = {
         "nombre": nombre,
         "apellido": apellido,
         "edad": edad,
-        "posicion": posicion,
-        "partidos": partidos,
-        "goles": goles,
-        "asistencias": asistencias,
-        "rating": rating
+        "posición": posicion,
+        "partidos_jugados": 0,
+        "goles": 0,
+        "asistencias": 0,
+        "promedio": 0.0
     }
 
-    jugadores.append(jugador)
-    print("Jugador agregado exitosamente.")
+    manejoJson.agregar_jugador(jugador)
+    print("✅ Jugador agregado correctamente.")
 
 def editarJugador():
+    jugadores = manejoJson.cargar_jugadores()
+
     if not jugadores:
         print("No hay jugadores cargados para editar.")
         return
 
-    mostrarLista()
-    nombre_buscar = input("Ingrese el nombre del jugador que quiere editar: ")
-    apellido_buscar = input("Ingrese el apellido del jugador que quiere editar: ")
+    print("\n--- Editar jugador ---")
+    nombre = input("Nombre del jugador a editar: ").strip().capitalize()
+    apellido = input("Apellido del jugador a editar: ").strip().capitalize()
 
+    jugador_encontrado = None
     for jugador in jugadores:
-        if jugador['nombre'].lower() == nombre_buscar.lower() and jugador['apellido'].lower() == apellido_buscar.lower():
-            print(f"Jugador encontrado: {jugador['nombre']} {jugador['apellido']}, Edad: {jugador['edad']}, "
-                  f"Posición: {jugador['posicion']}, Partidos: {jugador['partidos']}, "
-                  f"Goles: {jugador['goles']}, Asistencias: {jugador['asistencias']}")
+        if jugador["nombre"] == nombre and jugador["apellido"] == apellido:
+            jugador_encontrado = jugador
+            break
 
-            actNombre = input("Nuevo nombre (Enter para mantener): ")
-            actApellido = input("Nuevo apellido (Enter para mantener): ")
-            actEdad = input("Nueva edad (Enter para mantener): ")
-            actPosicion = input("Nueva posición (Enter para mantener): ")
+    if not jugador_encontrado:
+        print("⚠️ Jugador no encontrado.")
+        return
 
-            if actNombre:
-                jugador['nombre'] = actNombre
-            if actApellido:
-                jugador['apellido'] = actApellido
-            if actEdad.isdigit():
-                jugador['edad'] = int(actEdad)
-            if actPosicion:
-                jugador['posicion'] = actPosicion
+    print(f"\nJugador encontrado: {jugador_encontrado['nombre']} {jugador_encontrado['apellido']}")
+    print(f"Edad actual: {jugador_encontrado['edad']}")
+    print(f"Posición actual: {jugador_encontrado['posición']}")
+    print(f"Partidos jugados: {jugador_encontrado['partidos_jugados']}")
+    print(f"Goles: {jugador_encontrado['goles']}")
+    print(f"Asistencias: {jugador_encontrado['asistencias']}")
+    print(f"Promedio: {jugador_encontrado['promedio']}")
 
-            print("Jugador actualizado exitosamente.")
-            return
+    # Nuevos datos (si no se completa, se mantiene el anterior)
+    nuevo_nombre = input("Nuevo nombre (Enter para mantener): ").strip().capitalize()
+    nuevo_apellido = input("Nuevo apellido (Enter para mantener): ").strip().capitalize()
 
-    print("Jugador no encontrado.")
+    nueva_edad = input("Nueva edad (Enter para mantener): ").strip()
+    nueva_posicion = input("Nueva posición (ARQ, DEF, MC, DEL) (Enter para mantener): ").strip().upper()
+
+    nuevos_datos = {}
+
+    if nuevo_nombre:
+        nuevos_datos["nombre"] = nuevo_nombre
+    if nuevo_apellido:
+        nuevos_datos["apellido"] = nuevo_apellido
+    if nueva_edad.isdigit():
+        nuevos_datos["edad"] = int(nueva_edad)
+    elif nueva_edad:
+        print("⚠️ Edad inválida. No se modificó.")
+    if nueva_posicion in ["ARQ", "DEF", "MC", "DEL"]:
+        nuevos_datos["posición"] = nueva_posicion
+    elif nueva_posicion:
+        print("⚠️ Posición inválida. No se modificó.")
+
+    if nuevos_datos:
+        manejoJson.modificar_jugador(nombre, apellido, nuevos_datos)
+        print("✅ Jugador modificado con éxito.")
+    else:
+        print("No se realizaron cambios.")
+
 
 def bajaJugador():
+    jugadores = manejoJson.cargar_jugadores()
 
     if not jugadores:
         print("No hay jugadores cargados para eliminar.")
         return
 
-    nombre_buscar = input("Ingrese el nombre del jugador que quiere eliminar: ")
-    apellido_buscar = input("Ingrese el apellido del jugador que quiere editar: ")
+    print("\n--- Eliminar jugador ---")
+    nombre = input("Nombre del jugador a eliminar: ").strip().capitalize()
+    apellido = input("Apellido del jugador a eliminar: ").strip().capitalize()
 
-    for i, jugador in enumerate(jugadores):
-        if jugador['nombre'].lower() == nombre_buscar.lower() and jugador['apellido'].lower() == apellido_buscar.lower():
-            print(f"Jugador encontrado y eliminado: {jugador}")
-            jugadores.pop(i)
-            print("Jugador eliminado exitosamente.")
-            return
+    jugador_encontrado = None
+    for jugador in jugadores:
+        if jugador["nombre"] == nombre and jugador["apellido"] == apellido:
+            jugador_encontrado = jugador
+            break
 
-    print("Jugador no encontrado.")
+    if not jugador_encontrado:
+        print("⚠️ Jugador no encontrado.")
+        return
+
+    print(f"\nJugador encontrado: {jugador_encontrado['nombre']} {jugador_encontrado['apellido']}, "
+          f"Edad: {jugador_encontrado['edad']}, Posición: {jugador_encontrado['posición']}")
+
+    confirmacion = input("¿Estás seguro de que querés eliminarlo? (s/n): ").strip().lower()
+    if confirmacion == 's':
+        manejoJson.borrar_jugador(nombre, apellido)
+        print("✅ Jugador eliminado con éxito.")
+    else:
+        print("❌ Operación cancelada.")
+
 
 
 

@@ -5,11 +5,12 @@ RUTA_JSON = os.path.join(os.path.dirname(__file__), "../../src/json/jugadores.js
 
 def cargar_jugadores():
     with open(RUTA_JSON, "rt", encoding="utf-8") as file:
-        return json.load(file)
+        data = json.load(file)
+        return data["jugadores"]
 
 def guardar_jugadores(jugadores):
     with open(RUTA_JSON, "wt", encoding="utf-8") as file:
-        json.dump(jugadores, file, indent=2, ensure_ascii=False)
+        json.dump({"jugadores": jugadores}, file, indent=2, ensure_ascii=False)
 
 def agregar_jugador(nuevo_jugador):
     jugadores = cargar_jugadores()
