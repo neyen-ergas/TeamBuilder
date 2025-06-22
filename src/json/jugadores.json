@@ -1,0 +1,104 @@
+{
+  "jugadores": [
+    {
+      "nombre": "Lionel",
+      "apellido": "Messi",
+      "edad": 37,
+      "posición": "DEL",
+      "partidos_jugados": 30,
+      "goles": 22,
+      "asistencias": 15,
+      "promedio": 8.9
+    },
+    {
+      "nombre": "Kevin",
+      "apellido": "De Bruyne",
+      "edad": 33,
+      "posición": "MC",
+      "partidos_jugados": 28,
+      "goles": 8,
+      "asistencias": 18,
+      "promedio": 8.5
+    },
+    {
+      "nombre": "Erling",
+      "apellido": "Haaland",
+      "edad": 24,
+      "posición": "DEL",
+      "partidos_jugados": 32,
+      "goles": 27,
+      "asistencias": 6,
+      "promedio": 8.7
+    },
+    {
+      "nombre": "Virgil",
+      "apellido": "van Dijk",
+      "edad": 33,
+      "posición": "DEF",
+      "partidos_jugados": 31,
+      "goles": 3,
+      "asistencias": 2,
+      "promedio": 7.8
+    },
+    {
+      "nombre": "Thibaut",
+      "apellido": "Courtois",
+      "edad": 32,
+      "posición": "ARQ",
+      "partidos_jugados": 29,
+      "goles": 0,
+      "asistencias": 0,
+      "promedio": 8.2
+    },
+    {
+      "nombre": "Jude",
+      "apellido": "Bellingham",
+      "edad": 21,
+      "posición": "MC",
+      "partidos_jugados": 30,
+      "goles": 12,
+      "asistencias": 7,
+      "promedio": 8.4
+    },
+    {
+      "nombre": "Kylian",
+      "apellido": "Mbappé",
+      "edad": 26,
+      "posición": "DEL",
+      "partidos_jugados": 31,
+      "goles": 29,
+      "asistencias": 9,
+      "promedio": 9.0
+    },
+    {
+      "nombre": "Joshua",
+      "apellido": "Kimmich",
+      "edad": 30,
+      "posición": "MC",
+      "partidos_jugados": 29,
+      "goles": 2,
+      "asistencias": 11,
+      "promedio": 8.0
+    },
+    {
+      "nombre": "Achraf",
+      "apellido": "Hakimi",
+      "edad": 26,
+      "posición": "DEF",
+      "partidos_jugados": 28,
+      "goles": 5,
+      "asistencias": 8,
+      "promedio": 7.9
+    },
+    {
+      "nombre": "Pedri",
+      "apellido": "González",
+      "edad": 22,
+      "posición": "MC",
+      "partidos_jugados": 26,
+      "goles": 4,
+      "asistencias": 6,
+      "promedio": 8.1
+    }
+  ]
+}
