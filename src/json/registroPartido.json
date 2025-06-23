@@ -4,71 +4,71 @@
             "nombre": "Lionel",
             "apellido": "Messi",
             "goles": 3,
-            "asistencias": 1,
-            "calificacion": 9
+            "asistencias": 3,
+            "calificacion": 8
         },
         {
             "nombre": "Virgil",
             "apellido": "van Dijk",
-            "goles": 0,
-            "asistencias": 0,
-            "calificacion": 5
-        },
-        {
-            "nombre": "Kevin",
-            "apellido": "De Bruyne",
-            "goles": 0,
-            "asistencias": 0,
-            "calificacion": 5
+            "goles": 1,
+            "asistencias": 5,
+            "calificacion": 2
         },
         {
             "nombre": "Erling",
             "apellido": "Haaland",
-            "goles": 0,
-            "asistencias": 0,
-            "calificacion": 0
+            "goles": 2,
+            "asistencias": 2,
+            "calificacion": 2
+        },
+        {
+            "nombre": "Kevin",
+            "apellido": "De Bruyne",
+            "goles": 2,
+            "asistencias": 2,
+            "calificacion": 2
         },
         {
             "nombre": "Joshua",
             "apellido": "Kimmich",
-            "goles": 0,
-            "asistencias": 0,
-            "calificacion": 5
+            "goles": 2,
+            "asistencias": 2,
+            "calificacion": 2
         },
         {
             "nombre": "Jude",
             "apellido": "Bellingham",
-            "goles": 0,
-            "asistencias": 0,
-            "calificacion": 5
-        },
-        {
-            "nombre": "Kylian",
-            "apellido": "Mbappé",
-            "goles": 0,
-            "asistencias": 0,
-            "calificacion": 5
-        },
-        {
-            "nombre": "Pedri",
-            "apellido": "González",
-            "goles": 0,
-            "asistencias": 0,
-            "calificacion": 5
-        },
-        {
-            "nombre": "Achraf",
-            "apellido": "Hakimi",
-            "goles": 0,
-            "asistencias": 0,
-            "calificacion": 5
+            "goles": 2,
+            "asistencias": 2,
+            "calificacion": 2
         },
         {
             "nombre": "Thibaut",
             "apellido": "Courtois",
-            "goles": 0,
-            "asistencias": 0,
-            "calificacion": 5
+            "goles": 2,
+            "asistencias": 2,
+            "calificacion": 2
+        },
+        {
+            "nombre": "Achraf",
+            "apellido": "Hakimi",
+            "goles": 2,
+            "asistencias": 2,
+            "calificacion": 2
+        },
+        {
+            "nombre": "Kylian",
+            "apellido": "Mbappé",
+            "goles": 2,
+            "asistencias": 2,
+            "calificacion": 2
+        },
+        {
+            "nombre": "Pedri",
+            "apellido": "González",
+            "goles": 2,
+            "asistencias": 2,
+            "calificacion": 2
         }
     ]
 }

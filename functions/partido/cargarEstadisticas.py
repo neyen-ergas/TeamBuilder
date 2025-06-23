@@ -14,12 +14,29 @@ def cargarEstadisticas():
     print("\n=== CARGA DE ESTADÍSTICAS ===")
     for jugador in data["jugadores"]:
         print(f"\nJugador: {jugador['nombre']} {jugador['apellido']}")
+        
         try:
             jugador["goles"] = int(input("Goles: "))
-            jugador["asistencias"] = int(input("Asistencias: "))
-            jugador["calificacion"] = int(input("Calificación (1 a 10): "))
         except ValueError:
-            print("❌ Ingreso inválido. Se deja en 0.")
+            print("❌ Ingreso inválido. Se asigna 0 por defecto.")
+            jugador["goles"] = 0
+
+        try:
+            jugador["asistencias"] = int(input("Asistencias: "))
+        except ValueError:
+            print("❌ Ingreso inválido. Se asigna 0 por defecto.")
+            jugador["asistencias"] = 0
+
+        while True:
+            try:
+                calificacion = int(input("Calificación (1 a 10): "))
+                if 1 <= calificacion <= 10:
+                    jugador["calificacion"] = calificacion
+                    break
+                else:
+                    print("❌ Número inválido, debe estar entre 1 y 10.")
+            except ValueError:
+                print("❌ Ingreso inválido. Escribí un número del 1 al 10.")
 
     with open(RUTA_JSON, "w", encoding="utf-8") as archivo:
         json.dump(data, archivo, indent=4, ensure_ascii=False)

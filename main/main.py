@@ -6,6 +6,7 @@ from functions.archivos import manejoJson
 from functions.jugadores import jugadores as j
 from functions.partido.cargarEstadisticas import cargarEstadisticas
 from functions.partido.guardarRegistros import guardarRegistro
+from functions.partido.actualizarEstadisticas import actualizar_estadisticas
 
 
 def menuCrearPartido():
@@ -83,6 +84,9 @@ def crearPartido():
 
     if n == 1:
         cargarEstadisticas()
+        actualizar_estadisticas()
+        print("✅ Estadísticas actualizadas correctamente.")
+        print("✅ Registro guardado correctamente.")
         
 
 
