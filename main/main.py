@@ -5,6 +5,9 @@ from functions.armado import seleccionJugadoresEquipo, creadorEquipos
 from functions.archivos import manejoJson
 from functions.jugadores import jugadores as j
 from functions.ratings import top5
+from functions.partido.cargarEstadisticas import cargarEstadisticas
+from functions.partido.guardarRegistros import guardarRegistro
+from functions.partido.actualizarEstadisticas import actualizar_estadisticas
 
 
 def menuCrearPartido():
@@ -54,6 +57,10 @@ def crearPartido():
         - Se asegura de que se ingresen solo valores válidos.
         - La cantidad total de jugadores seleccionados será el doble del valor ingresado.
     """
+
+    if os.path.exists("registroPartido.json"):
+        os.remove("registroPartido.json")
+
     print("\n=== CREAR PARTIDO ===")
     print("¿Cuántos jugadores por equipo? (5 a 11)")
     
@@ -94,6 +101,17 @@ def crearPartido():
     print(f"{'Promedio Equipo 1:':<20} {puntaje1:<20.1f}")
     print(f"{'Promedio Equipo 2:':<20} {puntaje2:<20.1f}")
     print("=" * 40)
+
+    guardarRegistro(jugadoresPartido)
+
+    print("")
+    n = int(input("Presione 1 para finalizar el partido: "))
+
+    if n == 1:
+        cargarEstadisticas()
+        actualizar_estadisticas()
+        print("✅ Estadísticas actualizadas correctamente.")
+        print("✅ Registro guardado correctamente.")
         
 
 

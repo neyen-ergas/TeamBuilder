@@ -49,13 +49,11 @@ def altaJugador():
 
     print("\n--- Alta de nuevo jugador ---")
 
-
     while True:
         nombre = input("Nombre del jugador: ").strip().capitalize()
         if nombre.isalpha():
             break
         print("El nombre debe contener solo letras.")
-
 
     while True:
         apellido = input("Apellido del jugador: ").strip().capitalize()
@@ -63,12 +61,10 @@ def altaJugador():
             break
         print("El apellido debe contener solo letras.")
 
-
     for j in jugadores:
         if j["nombre"] == nombre and j["apellido"] == apellido:
             print("⚠️ Ya existe un jugador con ese nombre y apellido.")
             return
-
 
     while True:
         edad_input = input("Edad del jugador: ").strip()
@@ -76,7 +72,6 @@ def altaJugador():
             edad = int(edad_input)
             break
         print("La edad debe ser un número.")
-
 
     print("Posición del jugador:")
     print("1. ARQ\n2. DEF\n3. MC\n4. DEL")
@@ -140,7 +135,6 @@ def editarJugador():
     print(f"Goles: {jugador_encontrado['goles']}")
     print(f"Asistencias: {jugador_encontrado['asistencias']}")
     print(f"Promedio: {jugador_encontrado['promedio']}")
-
 
     nuevo_nombre = input("Nuevo nombre (Enter para mantener): ").strip().capitalize()
     nuevo_apellido = input("Nuevo apellido (Enter para mantener): ").strip().capitalize()
