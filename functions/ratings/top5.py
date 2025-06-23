@@ -2,7 +2,12 @@ from functions.archivos import manejoJson
 
 def goleadores():
     """
-    Muestra el Top 5 de jugadores con más goles.
+    Muestra en consola el Top 5 de jugadores con más goles convertidos.
+
+    Notas:
+        - Ordena la lista de jugadores por la clave 'goles' en orden descendente.
+        - Solo se muestran los primeros cinco jugadores.
+        - En caso de empate en goles, el orden dependerá del orden en la lista original.
     """
     jugadores = manejoJson.cargar_jugadores()
     top = sorted(jugadores, key=lambda j: j["goles"], reverse=True)[:5]
@@ -13,7 +18,11 @@ def goleadores():
 
 def asistidores():
     """
-    Muestra el Top 5 de jugadores con más asistencias.
+    Muestra en consola el Top 5 de jugadores con más asistencias realizadas.
+
+    Notas:
+        - Ordena la lista de jugadores por la clave 'asistencias' en orden descendente.
+        - Solo se muestran los cinco primeros jugadores.
     """
     jugadores = manejoJson.cargar_jugadores()
     top = sorted(jugadores, key=lambda j: j["asistencias"], reverse=True)[:5]
@@ -24,7 +33,11 @@ def asistidores():
 
 def activos():
     """
-    Muestra el Top 5 de jugadores con más partidos jugados.
+    Muestra en consola el Top 5 de jugadores con más partidos jugados.
+
+    Notas:
+        - Ordena por la cantidad de partidos jugados en orden descendente.
+        - Refleja qué jugadores participaron más activamente en los encuentros registrados.
     """
     jugadores = manejoJson.cargar_jugadores()
     top = sorted(jugadores, key=lambda j: j["partidos_jugados"], reverse=True)[:5]
@@ -35,7 +48,11 @@ def activos():
 
 def ganadores():
     """
-    Muestra el Top 5 de jugadores con mejor promedio.
+    Muestra en consola el Top 5 de jugadores con mejor promedio general.
+
+    Notas:
+        - Ordena por la clave 'promedio' en orden descendente.
+        - El promedio representa el rendimiento global del jugador en partidos anteriores.
     """
     jugadores = manejoJson.cargar_jugadores()
     top = sorted(jugadores, key=lambda j: j["promedio"], reverse=True)[:5]
@@ -46,7 +63,11 @@ def ganadores():
 
 def perdedores():
     """
-    Muestra el Top 5 de jugadores con peor promedio.
+    Muestra en consola el Top 5 de jugadores con peor promedio general.
+
+    Notas:
+        - Ordena por la clave 'promedio' en orden ascendente.
+        - Refleja a los jugadores con menor rendimiento en el sistema.
     """
     jugadores = manejoJson.cargar_jugadores()
     top = sorted(jugadores, key=lambda j: j["promedio"])[:5]

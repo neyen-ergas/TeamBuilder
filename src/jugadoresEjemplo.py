@@ -11,6 +11,3 @@ jugadores = [
     ["Pedri", "González", 22, "MC", 26, 4, 6, 8.1]
 ]
 
-
-
-    #TODO:Estos datos son de ejemplo, mas adelante se cambiaran por registro en documentos
