@@ -67,7 +67,7 @@ def crearPartido():
     while True:
         try:
             num = int(input("Ingresar cantidad: "))
-            if 2 <= num <= 11:
+            if 5 <= num <= 11:
                 break
             else:
                 print("❌ Debe estar entre 5 y 11.")
@@ -80,7 +80,7 @@ def crearPartido():
         print(f"⚠️ No hay suficientes jugadores para 2 equipos de {num}. (Total disponibles: {total_jugadores})")
         try:
             num = int(input("Elegí un número menor de jugadores por equipo: "))
-            if num < 2 or num > 11:
+            if num < 5 or num > 11:
                 print("❌ Número fuera de rango (5-11).")
         except ValueError:
             print("❌ Ingresá un número válido.")
@@ -102,7 +102,7 @@ def crearPartido():
     print(f"{'Promedio Equipo 2:':<20} {puntaje2:<20.1f}")
     print("=" * 40)
 
-    guardarRegistro(jugadoresPartido, equipo1, equipo2)
+    guardarRegistro(jugadoresPartido)
 
     print("")
     n = int(input("Presione 1 para finalizar el partido: "))
