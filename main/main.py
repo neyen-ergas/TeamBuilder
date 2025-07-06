@@ -236,30 +236,55 @@ def menuEstadisticas():
         n2 = int(input("Escriba '1' para volver atras: "))
         if   n2 == 1:
             menuEstadisticas()
+        while n2 != 1:
+            print("Ingresar una acción válida.")
+            n2 = int(input("Escriba '1' para volver atras: "))
+            if   n2 == 1:
+                menuEstadisticas()    
     elif n == 2:
         top5.asistidores()
         print("1. Volver atras")
         n2 = int(input("Escriba '1' para volver atras: "))
         if   n2 == 1:
             menuEstadisticas()
+        while n2 != 1:
+            print("Ingresar una acción válida.")
+            n2 = int(input("Escriba '1' para volver atras: "))
+            if   n2 == 1:
+                menuEstadisticas()
     elif n == 3:
         top5.activos()
         print("1. Volver atras")
         n2 = int(input("Escriba '1' para volver atras: "))
         if   n2 == 1:
             menuEstadisticas()
+        while n2 != 1:
+            print("Ingresar una acción válida.")
+            n2 = int(input("Escriba '1' para volver atras: "))
+            if   n2 == 1:
+                menuEstadisticas()
     elif n == 4:
         top5.ganadores()
         print("1. Volver atras")
         n2 = int(input("Escriba '1' para volver atras: "))
         if   n2 == 1:
             menuEstadisticas()
+        while n2 != 1:
+            print("Ingresar una acción válida.")
+            n2 = int(input("Escriba '1' para volver atras: "))
+            if   n2 == 1:
+                menuEstadisticas()
     elif n == 5:
         top5.perdedores()
         print("1. Volver atras")
         n2 = int(input("Escriba '1' para volver atras: "))
         if   n2 == 1:
             menuEstadisticas()
+        while n2 != 1:
+            print("Ingresar una acción válida.")
+            n2 = int(input("Escriba '1' para volver atras: "))
+            if   n2 == 1:
+                menuEstadisticas()    
     elif n == 6:
         main()
     
