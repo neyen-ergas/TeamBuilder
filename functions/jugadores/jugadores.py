@@ -5,9 +5,14 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from functions.archivos import manejoJson
 
 
-#TODO agregar ids jugadores
-
 def mostrar_lista():
+    """
+    Muestra en consola la lista completa de jugadores registrados con sus estadísticas.
+
+    Notas:
+        - Si no hay jugadores cargados, informa al usuario.
+        - Muestra nombre, apellido, edad, posición, partidos jugados, goles y asistencias.
+    """
     jugadores = manejoJson.cargar_jugadores()
     if not jugadores:
         print("No hay jugadores cargados.")
@@ -21,34 +26,46 @@ def mostrar_lista():
     print()
 
 def cantidad_jugadores():
+    """
+    Devuelve la cantidad total de jugadores registrados.
+
+    Returns:
+        int: Número de jugadores actuales en el sistema.
+    """
     return len(manejoJson.cargar_jugadores())
 
 def altaJugador():
+    """
+    Permite cargar un nuevo jugador a través de inputs por consola.
+
+    Notas:
+        - Valida que nombre y apellido contengan solo letras.
+        - Evita duplicados (mismo nombre y apellido).
+        - Solicita la edad y la posición del jugador.
+        - Asigna estadísticas iniciales en 0.
+        - Agrega el nuevo jugador al archivo JSON.
+    """
     jugadores = manejoJson.cargar_jugadores()
 
     print("\n--- Alta de nuevo jugador ---")
 
-    # Validar nombre
     while True:
         nombre = input("Nombre del jugador: ").strip().capitalize()
         if nombre.isalpha():
             break
         print("El nombre debe contener solo letras.")
 
-    # Validar apellido
     while True:
         apellido = input("Apellido del jugador: ").strip().capitalize()
         if apellido.isalpha():
             break
         print("El apellido debe contener solo letras.")
 
-    # Evitar duplicados
     for j in jugadores:
         if j["nombre"] == nombre and j["apellido"] == apellido:
             print("⚠️ Ya existe un jugador con ese nombre y apellido.")
             return
 
-    # Edad
     while True:
         edad_input = input("Edad del jugador: ").strip()
         if edad_input.isdigit():
@@ -56,7 +73,6 @@ def altaJugador():
             break
         print("La edad debe ser un número.")
 
-    # Posición
     print("Posición del jugador:")
     print("1. ARQ\n2. DEF\n3. MC\n4. DEL")
     opciones_pos = {"1": "ARQ", "2": "DEF", "3": "MC", "4": "DEL"}
@@ -68,7 +84,6 @@ def altaJugador():
             break
         print("Opción inválida. Elegí 1, 2, 3 o 4.")
 
-    # Crear jugador nuevo
     jugador = {
         "nombre": nombre,
         "apellido": apellido,
@@ -84,6 +99,15 @@ def altaJugador():
     print("✅ Jugador agregado correctamente.")
 
 def editarJugador():
+    """
+    Permite editar los datos de un jugador existente.
+
+    Notas:
+        - Busca al jugador por nombre y apellido.
+        - Permite modificar nombre, apellido, edad y posición.
+        - Si un campo se deja vacío, conserva el valor original.
+        - Informa si el jugador no existe o si no se realizaron cambios.
+    """
     jugadores = manejoJson.cargar_jugadores()
 
     if not jugadores:
@@ -112,7 +136,6 @@ def editarJugador():
     print(f"Asistencias: {jugador_encontrado['asistencias']}")
     print(f"Promedio: {jugador_encontrado['promedio']}")
 
-    # Nuevos datos (si no se completa, se mantiene el anterior)
     nuevo_nombre = input("Nuevo nombre (Enter para mantener): ").strip().capitalize()
     nuevo_apellido = input("Nuevo apellido (Enter para mantener): ").strip().capitalize()
 
@@ -142,6 +165,14 @@ def editarJugador():
 
 
 def bajaJugador():
+    """
+    Permite eliminar un jugador de la base de datos.
+
+    Notas:
+        - Busca por nombre y apellido.
+        - Muestra una confirmación antes de eliminar.
+        - Si el jugador no existe, informa al usuario.
+    """
     jugadores = manejoJson.cargar_jugadores()
 
     if not jugadores:

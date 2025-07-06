@@ -6,12 +6,38 @@ from functions.archivos import manejoJson
 
 
 def buscar_jugador_por_nombre(nombre):
+    """
+    Busca jugadores por nombre ignorando mayúsculas y minúsculas.
+
+    Args:
+        nombre (str): Nombre del jugador a buscar.
+
+    Returns:
+        list: Lista de jugadores cuyo nombre coincide exactamente, sin distinguir mayúsculas.
+
+    Notas:
+        - Si hay varios jugadores con el mismo nombre, se devuelven todos.
+        - No filtra por apellido.
+    """
     jugadores = manejoJson.cargar_jugadores()
-    # Devuelve la lista de jugadores que coinciden con el nombre (case insensitive)
     return [j for j in jugadores if j["nombre"].lower() == nombre.lower()]
 
 
 def buscar_jugador(nombre, apellido):
+    """
+    Busca un jugador por nombre y apellido (case-insensitive).
+
+    Args:
+        nombre (str): Nombre del jugador.
+        apellido (str): Apellido del jugador.
+
+    Returns:
+        dict or None: El jugador encontrado o None si no existe.
+
+    Notas:
+        - La comparación no distingue mayúsculas ni minúsculas.
+        - Devuelve solo el primer jugador que coincida exactamente.
+    """
     jugadores = manejoJson.cargar_jugadores()
     for jugador in jugadores:
         if jugador["nombre"].lower() == nombre.lower() and jugador["apellido"].lower() == apellido.lower():
@@ -20,6 +46,20 @@ def buscar_jugador(nombre, apellido):
 
 
 def agregar_jugador_a_partido(cantidad):
+    """
+    Permite seleccionar manualmente una cantidad de jugadores para un partido.
+
+    Args:
+        cantidad (int): Número total de jugadores que deben ser seleccionados.
+
+    Returns:
+        list: Lista de diccionarios con los datos de los jugadores seleccionados.
+
+    Notas:
+        - Se realiza una búsqueda por nombre y, si hay ambigüedad, se pide el apellido.
+        - No permite seleccionar al mismo jugador más de una vez.
+        - Valida que el jugador exista antes de agregarlo.
+    """
     jugadores_partido = []
     print(f"\n--- Selección de {cantidad} jugadores para el partido ---")
 
