@@ -7,16 +7,14 @@ def guardarRegistro(jugadores, equipo1, equipo2):
     datos = {"jugadores": []}
     
     for jugador in jugadores:
-        # Convertir tupla a string
+        
         nombre_completo = f"{jugador['nombre']} {jugador['apellido']}"
         
-        # Verificar en qué equipo está usando las listas directamente
+
         if nombre_completo in equipo1:
             equipo = 1
         elif nombre_completo in equipo2:
             equipo = 2
-        else:
-            equipo = 0  # Sin equipo
         
         datos["jugadores"].append({
             "nombre": jugador["nombre"],

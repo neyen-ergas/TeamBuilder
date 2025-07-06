@@ -102,7 +102,7 @@ def crearPartido():
     print(f"{'Promedio Equipo 2:':<20} {puntaje2:<20.1f}")
     print("=" * 40)
 
-    guardarRegistro(jugadoresPartido)
+    guardarRegistro(jugadoresPartido,equipo1, equipo2)
 
     print("")
     n = int(input("Presione 1 para finalizar el partido: "))
