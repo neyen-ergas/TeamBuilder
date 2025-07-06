@@ -11,7 +11,10 @@ def guardarRegistro(jugadores):
             "apellido": jugador["apellido"],
             "goles": 0,
             "asistencias": 0,
-            "calificacion": 0
+            "calificacion": 0,
+            "ganados": 0,
+            "perdidos": 0,
+            "empatados": 0
         })
 
     with open(RUTA_JSON, "w", encoding="utf-8") as archivo:

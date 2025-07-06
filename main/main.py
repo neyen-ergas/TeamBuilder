@@ -1,5 +1,6 @@
 import sys
 import os
+import json
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from functions.armado import seleccionJugadoresEquipo, creadorEquipos
 from functions.archivos import manejoJson
@@ -108,6 +109,37 @@ def crearPartido():
     n = int(input("Presione 1 para finalizar el partido: "))
 
     if n == 1:
+        print("\nIngrese el resultado final del partido")
+        goles1 = int(input("Goles del Equipo 1: "))
+        goles2 = int(input("Goles del Equipo 2: "))
+
+        RUTA_REGISTRO = os.path.join(os.path.dirname(__file__), "../src/json/registroPartido.json")
+
+        with open(RUTA_REGISTRO, "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        if goles1 == goles2:
+            print("🤝 Empate: se registra empate para todos los jugadores.")
+
+            for jugador in data["jugadores"]:
+                jugador["empatados"] += 1
+
+        else:
+            equipo_ganador = equipo1 if goles1 > goles2 else equipo2
+            equipo_perdedor = equipo2 if goles1 > goles2 else equipo1
+
+            for jugador in data["jugadores"]:
+                nombre_completo = f"{jugador['nombre']} {jugador['apellido']}"
+                if nombre_completo in equipo_ganador:
+                    jugador["ganados"] += 1
+                elif nombre_completo in equipo_perdedor:
+                    jugador["perdidos"] += 1
+
+            print("✅ Resultado registrado correctamente.")
+
+        with open(RUTA_REGISTRO, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=4, ensure_ascii=False)
+
         cargarEstadisticas()
         actualizar_estadisticas()
         print("✅ Estadísticas actualizadas correctamente.")
