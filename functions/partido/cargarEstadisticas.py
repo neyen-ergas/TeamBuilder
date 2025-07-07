@@ -20,9 +20,6 @@ def cargarEstadisticas(goles1, goles2):
     with open(RUTA_JUGADORES, "r", encoding="utf-8") as archivo:
         jugadores_data = json.load(archivo)
 
-    print(f"Goles del Equipo 1: {goles1}")
-    print(f"Goles del Equipo 2: {goles2}")
-
     if goles1 == goles2:
         equipoganador = 0
         print("🤝 Partido empatado.")
@@ -83,6 +80,7 @@ def cargarEstadisticas(goles1, goles2):
 
     if goles_equipo_1 != goles1 or goles_equipo_2 != goles2:
         print("\n❌ Error: los goles ingresados por jugador no coinciden con los del resultado del partido.")
+        
         print(f"Goles equipo 1 (ingresados): {goles_equipo_1} | Resultado oficial: {goles1}")
         print(f"Goles equipo 2 (ingresados): {goles_equipo_2} | Resultado oficial: {goles2}")
         return True

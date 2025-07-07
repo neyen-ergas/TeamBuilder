@@ -150,7 +150,7 @@ def crearPartido():
         while error:
             error = cargarEstadisticas(goles1, goles2)
             if error:
-                print("Intente nuevamente.")
+                print("⚠️ Intente nuevamente ⚠️")
 
         actualizar_estadisticas()
         print("✅ Estadísticas actualizadas correctamente.")
