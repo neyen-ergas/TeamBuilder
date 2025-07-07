@@ -136,8 +136,18 @@ def editarJugador():
     print(f"Asistencias: {jugador_encontrado['asistencias']}")
     print(f"Promedio: {jugador_encontrado['promedio']}")
 
-    nuevo_nombre = input("Nuevo nombre (Enter para mantener): ").strip().capitalize()
-    nuevo_apellido = input("Nuevo apellido (Enter para mantener): ").strip().capitalize()
+    def validar_nombre_input(label):
+        while True:
+            entrada = input(f"{label} (Enter para mantener): ").strip()
+            if not entrada:
+                return ""
+            if entrada.isalpha():
+                return entrada.capitalize()
+            else:
+                print("⚠️ Solo se permiten letras. Reintentá.")
+
+    nuevo_nombre = validar_nombre_input("Nuevo nombre")
+    nuevo_apellido = validar_nombre_input("Nuevo apellido")
 
     nueva_edad = input("Nueva edad (Enter para mantener): ").strip()
     nueva_posicion = input("Nueva posición (ARQ, DEF, MC, DEL) (Enter para mantener): ").strip().upper()
