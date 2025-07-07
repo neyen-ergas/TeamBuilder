@@ -107,11 +107,15 @@ def crearPartido():
     print("")
     n = int(input("Presione 1 para finalizar el partido: "))
 
-    if n == 1:
-        cargarEstadisticas()
-        actualizar_estadisticas()
-        print("✅ Estadísticas actualizadas correctamente.")
-        print("✅ Registro guardado correctamente.")
+    while n != 1:
+        print("Ingresar una acción válida.")
+        n = int(input("Presione 1 para finalizar el partido: "))
+        if n == 1:
+            cargarEstadisticas()
+            actualizar_estadisticas()
+            print("✅ Estadísticas actualizadas correctamente.")
+            print("✅ Registro guardado correctamente.")
+            main()
         
 
 
@@ -186,7 +190,7 @@ def main():
     print("¿Que acción quiere realizar?")
     print("1. Crear Partido")
     print("2. Administración de jugadores")
-    print("3. Estadísticas")                   
+    print("3. Estadísticas")
     print("4. Salir")
     
 

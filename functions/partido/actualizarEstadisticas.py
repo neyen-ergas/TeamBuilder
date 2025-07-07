@@ -1,7 +1,6 @@
 import json
 import os
 
-# Rutas
 BASE_DIR = os.path.dirname(__file__)
 RUTA_REGISTRO = os.path.join(BASE_DIR, "../../src/json/registroPartido.json")
 RUTA_JUGADORES = os.path.join(BASE_DIR, "../../src/json/jugadores.json")

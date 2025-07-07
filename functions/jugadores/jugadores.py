@@ -136,8 +136,8 @@ def editarJugador():
     print(f"Asistencias: {jugador_encontrado['asistencias']}")
     print(f"Promedio: {jugador_encontrado['promedio']}")
 
-    nuevo_nombre = input("Nuevo nombre (Enter para mantener): ").strip().capitalize()
-    nuevo_apellido = input("Nuevo apellido (Enter para mantener): ").strip().capitalize()
+    nuevo_nombre = input("Nuevo nombre (Enter para mantener): ").strip().capitalize().isalpha
+    nuevo_apellido = input("Nuevo apellido (Enter para mantener): ").strip().capitalize().isalpha
 
     nueva_edad = input("Nueva edad (Enter para mantener): ").strip()
     nueva_posicion = input("Nueva posición (ARQ, DEF, MC, DEL) (Enter para mantener): ").strip().upper()
@@ -197,11 +197,14 @@ def bajaJugador():
           f"Edad: {jugador_encontrado['edad']}, Posición: {jugador_encontrado['posición']}")
 
     confirmacion = input("¿Estás seguro de que querés eliminarlo? (s/n): ").strip().lower()
-    if confirmacion == 's':
-        manejoJson.borrar_jugador(nombre, apellido)
-        print("✅ Jugador eliminado con éxito.")
-    else:
-        print("❌ Operación cancelada.")
+    while confirmacion not in ['s', 'n']:
+        print("Ingresar una opción válida (s/n).")
+        confirmacion = input("¿Estás seguro de que querés eliminarlo? (s/n): ").strip().lower()
+        if confirmacion == 's':
+            manejoJson.borrar_jugador(nombre, apellido)
+            print("✅ Jugador eliminado con éxito.")
+        else:
+            print("❌ Operación cancelada.")
 
 
 
