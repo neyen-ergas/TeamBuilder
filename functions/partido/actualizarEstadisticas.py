@@ -1,13 +1,13 @@
 import json
 import os
 
-# Rutas
+
 BASE_DIR = os.path.dirname(__file__)
 RUTA_REGISTRO = os.path.join(BASE_DIR, "../../src/json/registroPartido.json")
 RUTA_JUGADORES = os.path.join(BASE_DIR, "../../src/json/jugadores.json")
 
 def actualizar_estadisticas():
-    # Verificar existencia de archivos
+
     if not os.path.exists(RUTA_REGISTRO):
         print(f"❌ No existe el registro de partido: {RUTA_REGISTRO}")
         return
@@ -15,11 +15,11 @@ def actualizar_estadisticas():
         print(f"❌ No existe el archivo de jugadores: {RUTA_JUGADORES}")
         return
 
-    # Cargar registro del partido
+
     with open(RUTA_REGISTRO, "r", encoding="utf-8") as f:
         registro = json.load(f)
 
-    # Cargar datos maestros de jugadores
+
     with open(RUTA_JUGADORES, "r", encoding="utf-8") as f:
         maestros = json.load(f)
 
@@ -30,7 +30,7 @@ def actualizar_estadisticas():
         asist = part.get("asistencias", 0)
         calif = part.get("calificacion", 0)
 
-        # Buscar jugador en el JSON maestro
+
         encontrada = next(
             (j for j in maestros["jugadores"]
              if j["nombre"] == nom and j["apellido"] == ape),
@@ -40,18 +40,18 @@ def actualizar_estadisticas():
             print(f"⚠️ Jugador no encontrado: {nom} {ape}")
             continue
 
-        # Actualizar
+
         encontrada["goles"] += goles
         encontrada["asistencias"] += asist
         encontrada["partidos_jugados"] += 1
 
-        # Recalcular promedio de calificación
+
         pj = encontrada["partidos_jugados"]
         total_prev = encontrada["promedio"] * (pj - 1)
         nueva_media = (total_prev + calif) / pj
         encontrada["promedio"] = round(nueva_media, 2)
 
-    # Guardar cambios
+
     with open(RUTA_JUGADORES, "w", encoding="utf-8") as f:
         json.dump(maestros, f, indent=4, ensure_ascii=False)
 

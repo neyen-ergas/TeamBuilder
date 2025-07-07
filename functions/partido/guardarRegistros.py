@@ -3,15 +3,26 @@ import os
 
 RUTA_JSON = os.path.join(os.path.dirname(__file__), "../../src/json/registroPartido.json")
 
-def guardarRegistro(jugadores):
+def guardarRegistro(jugadores, equipo1, equipo2):
     datos = {"jugadores": []}
+    
     for jugador in jugadores:
+        
+        nombre_completo = f"{jugador['nombre']} {jugador['apellido']}"
+        
+
+        if nombre_completo in equipo1:
+            equipo = 1
+        elif nombre_completo in equipo2:
+            equipo = 2
+        
         datos["jugadores"].append({
             "nombre": jugador["nombre"],
             "apellido": jugador["apellido"],
             "goles": 0,
             "asistencias": 0,
-            "calificacion": 0
+            "calificacion": 0,
+            "equipo": equipo
         })
 
     with open(RUTA_JSON, "w", encoding="utf-8") as archivo:
