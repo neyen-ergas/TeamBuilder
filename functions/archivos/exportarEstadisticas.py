@@ -14,7 +14,7 @@ def exportarStats():
     campos = [
         "Nombre", "Apellido", "Edad", "Posición", "Partidos Jugados",
         "Goles", "Asistencias", "Promedio de Calificación",
-        "Partidos Ganados", "Partidos Perdidos", "Partidos Empatados"
+        "Partidos Ganados", "Partidos Perdidos", "Partidos Empatados", "Rachas"
     ]
 
     with open(ruta_csv, "w", newline='', encoding="utf-8") as csvfile:
