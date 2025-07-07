@@ -1,7 +1,9 @@
 import sys
 import os
 import json
+
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from functions.armado import seleccionJugadoresEquipo, creadorEquipos
 from functions.archivos import manejoJson
 from functions.archivos.exportarEstadisticas import exportarStats
@@ -13,53 +15,29 @@ from functions.partido.actualizarEstadisticas import actualizar_estadisticas
 
 
 def menuCrearPartido():
-    """
-    Muestra un submenú con opciones relacionadas a la creación de un nuevo partido.
-
-    Opciones:
-        1 - Crear Partido: inicia el proceso de armado de equipos.
-        2 - Volver: retorna al menú principal.
-
-    Notas:
-        - Valida la entrada del usuario para evitar opciones incorrectas.
-        - Llama a la función 'crearPartido()' si se selecciona la opción 1.
-    """
-    print()
-    print()
     print()
     print()
     print("¿Que acción quiere realizar?") 
     print("1. Crear Partido")
     print("2. Volver al menú principal")
-    
 
-    n = int(input("Ingresar acción: "))
-    while n != 1 and n != 2:
-        print("Ingresar una acción válida.")
-        n = int(input("Ingresar acción: "))
+    while True:
+        try:
+            n = int(input("Ingresar acción: "))
+            if n == 1 or n == 2:
+                break
+            else:
+                print("Ingresar una acción válida.")
+        except ValueError:
+            print("❌ Ingresá un número válido.")
+
     if n == 1:
         crearPartido()
     elif n == 2:
         main()
 
 
-    
 def crearPartido():
-    """
-    Inicia el proceso de armado de un partido con equipos equilibrados.
-
-    Flujo:
-        1. Solicita cuántos jugadores por equipo (entre 5 y 11).
-        2. Valida que haya suficientes jugadores en la base de datos.
-        3. Permite seleccionar manualmente a los jugadores que participarán.
-        4. Usa el algoritmo de 'creadorEquipos' para generar los equipos equilibrados.
-        5. Muestra por pantalla los equipos y el promedio de cada uno.
-
-    Notas:
-        - Se asegura de que se ingresen solo valores válidos.
-        - La cantidad total de jugadores seleccionados será el doble del valor ingresado.
-    """
-
     if os.path.exists("registroPartido.json"):
         os.remove("registroPartido.json")
 
@@ -104,77 +82,66 @@ def crearPartido():
     print(f"{'Promedio Equipo 2:':<20} {puntaje2:<20.1f}")
     print("=" * 40)
 
-    guardarRegistro(jugadoresPartido,equipo1, equipo2)
+    guardarRegistro(jugadoresPartido, equipo1, equipo2)
 
     print("")
-    n = int(input("Presione 1 para finalizar el partido: "))
-
-    if n == 1:
-        print("\nIngrese el resultado final del partido")
+    while True:
         try:
-            goles1 = int(input("Goles del Equipo 1: "))
-            goles2 = int(input("Goles del Equipo 2: "))
+            n = int(input("Presione 1 para finalizar el partido: "))
+            if n == 1:
+                break
+            else:
+                print("❌ Ingresar '1' para finalizar.")
         except ValueError:
-            print("❌ Entrada inválida. Se asignan 0 por defecto.")
-            goles1, goles2 = 0, 0
+            print("❌ Ingresá un número.")
 
-        RUTA_REGISTRO = os.path.join(os.path.dirname(__file__), "../src/json/registroPartido.json")
+    print("\nIngrese el resultado final del partido")
+    try:
+        goles1 = int(input("Goles del Equipo 1: "))
+        goles2 = int(input("Goles del Equipo 2: "))
+    except ValueError:
+        print("❌ Entrada inválida. Se asignan 0 por defecto.")
+        goles1, goles2 = 0, 0
 
-        with open(RUTA_REGISTRO, "r", encoding="utf-8") as f:
-            data = json.load(f)
+    RUTA_REGISTRO = os.path.join(os.path.dirname(__file__), "../src/json/registroPartido.json")
 
-        if goles1 == goles2:
-            print("🤝 Empate: se registra empate para todos los jugadores.")
+    with open(RUTA_REGISTRO, "r", encoding="utf-8") as f:
+        data = json.load(f)
 
-            for jugador in data["jugadores"]:
-                jugador["empatados"] += 1
+    if goles1 == goles2:
+        print("🤝 Empate: se registra empate para todos los jugadores.")
+        for jugador in data["jugadores"]:
+            jugador["empatados"] += 1
+    else:
+        equipo_ganador = equipo1 if goles1 > goles2 else equipo2
+        equipo_perdedor = equipo2 if goles1 > goles2 else equipo1
 
-        else:
-            equipo_ganador = equipo1 if goles1 > goles2 else equipo2
-            equipo_perdedor = equipo2 if goles1 > goles2 else equipo1
+        for jugador in data["jugadores"]:
+            nombre_completo = f"{jugador['nombre']} {jugador['apellido']}"
+            if nombre_completo in equipo_ganador:
+                jugador["ganados"] += 1
+            elif nombre_completo in equipo_perdedor:
+                jugador["perdidos"] += 1
 
-            for jugador in data["jugadores"]:
-                nombre_completo = f"{jugador['nombre']} {jugador['apellido']}"
-                if nombre_completo in equipo_ganador:
-                    jugador["ganados"] += 1
-                elif nombre_completo in equipo_perdedor:
-                    jugador["perdidos"] += 1
+        print("✅ Resultado registrado correctamente.")
 
-            print("✅ Resultado registrado correctamente.")
+    with open(RUTA_REGISTRO, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=4, ensure_ascii=False)
 
-        with open(RUTA_REGISTRO, "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=4, ensure_ascii=False)
+    error = True
+    while error:
+        error = cargarEstadisticas(goles1, goles2)
+        if error:
+            print("⚠️ Intente nuevamente ⚠️")
 
+    actualizar_estadisticas()
+    print("✅ Estadísticas actualizadas correctamente.")
+    print("✅ Registro guardado correctamente.")
 
-        error = True
-        while error:
-            error = cargarEstadisticas(goles1, goles2)
-            if error:
-                print("⚠️ Intente nuevamente ⚠️")
-
-        actualizar_estadisticas()
-        print("✅ Estadísticas actualizadas correctamente.")
-        print("✅ Registro guardado correctamente.")
-
-        main()
-        
+    main()
 
 
 def menuJugadores():
-    """
-    Muestra un submenú para gestionar jugadores.
-
-    Opciones:
-        1 - Mostrar lista de jugadores.
-        2 - Dar de alta un nuevo jugador.
-        3 - Editar los datos de un jugador existente.
-        4 - Eliminar un jugador de la base de datos.
-        5 - Volver al menú principal.
-
-    Notas:
-        - Llama a funciones del módulo 'jugadores' para cada acción.
-        - Valida la opción seleccionada antes de continuar.
-    """
     print()
     print()
     print("¿Que acción quiere realizar?") 
@@ -184,12 +151,15 @@ def menuJugadores():
     print("4. Baja de jugador")
     print("5. Volver al menú principal")
 
-    n = int(input("Ingresar acción: "))
-    while n < 0 or n > 5: 
-        print("Ingresar una acción válida.")
-        n = int(input("Ingresar acción: "))
-
-    
+    while True:
+        try:
+            n = int(input("Ingresar acción: "))
+            if 1 <= n <= 5:
+                break
+            else:
+                print("Ingresar una acción válida.")
+        except ValueError:
+            print("❌ Ingresá un número válido.")
 
     if n == 1:
         j.mostrar_lista()
@@ -205,27 +175,9 @@ def menuJugadores():
         menuJugadores()
     elif n == 5:
         main()
-        
+
 
 def main():
-    """
-    Función principal que lanza el menú inicial de la aplicación.
-
-    Opciones:
-        1 - Crear Partido.
-        2 - Administración de jugadores.
-        3 - Ver estadísticas.
-        4 - Salir del programa.
-
-    Notas:
-        - Es la primera función que se ejecuta.
-        - Controla la navegación hacia los demás submenús.
-        - La validación de opciones tiene un error lógico en la condición del while (debería ser `while n < 1 or n > 4`).
-    """
-    print()
-    print()
-    print()
-    print()
     print()
     print()
     print()
@@ -235,12 +187,16 @@ def main():
     print("2. Administración de jugadores")
     print("3. Estadísticas")                   
     print("4. Salir")
-    
 
-    n = int(input("Ingresar acción: "))
-    while n < 0 or n > 3:
-        print("Ingresar una acción válida.")
-        n = int(input("Ingresar acción: "))
+    while True:
+        try:
+            n = int(input("Ingresar acción: "))
+            if 1 <= n <= 4:
+                break
+            else:
+                print("Ingresar una acción válida.")
+        except ValueError:
+            print("❌ Ingresá un número válido.")
 
     if n == 1:
         menuCrearPartido()
@@ -251,23 +207,10 @@ def main():
     else:
         print("¡Hasta pronto!")
 
+
 def menuEstadisticas():
-    """
-    Muestra un submenú para consultar diferentes estadísticas de jugadores.
-
-    Opciones:
-        1 - Top 5 goleadores.
-        2 - Top 5 asistidores.
-        3 - Top 5 más activos.
-        4 - Top 5 con mejor promedio.
-        5 - Top 5 con peor promedio.
-        6 - Volver al menú principal.
-
-    Notas:
-        - Cada opción muestra un ranking generado por funciones del módulo 'top5'.
-        - Después de mostrar el ranking, solicita al usuario que presione 1 para volver.
-    """
-
+    print()
+    print()
     print("¿De qué quiere ver estadísticas?")
     print("1. Top 5 goleadores")
     print("2. Top 5 asistidores") 
@@ -277,67 +220,43 @@ def menuEstadisticas():
     print("6. Descargar estadísticas")
     print("7. Volver atras")
 
-    n = int(input("Ingresar acción: "))
-    while n < 0 or n > 7: 
-        print("Ingresar una acción válida.")
-        n = int(input("Ingresar acción: "))
+    while True:
+        try:
+            n = int(input("Ingresar acción: "))
+            if 1 <= n <= 7:
+                break
+            else:
+                print("Ingresar una acción válida.")
+        except ValueError:
+            print("❌ Ingresá un número válido.")
 
-    if   n == 1:
+    if n == 1:
         top5.goleadores()
-        print("1. Volver atras")
-        n2 = int(input("Escriba '1' para volver atras: "))
-        if   n2 == 1:
-            menuEstadisticas()
-        while n2 != 1:
-            n2 = int(input("Acción inválida. Intente nuevamente: "))
-            if n2 == 1:
-                menuEstadisticas()
     elif n == 2:
         top5.asistidores()
-        print("1. Volver atras")
-        n2 = int(input("Escriba '1' para volver atras: "))
-        if   n2 == 1:
-            menuEstadisticas()
-        while n2 != 1:
-            n2 = int(input("Acción inválida. Intente nuevamente: "))
-            if n2 == 1:
-                menuEstadisticas()        
     elif n == 3:
         top5.activos()
-        print("1. Volver atras")
-        n2 = int(input("Escriba '1' para volver atras: "))
-        if   n2 == 1:
-            menuEstadisticas()
-        while n2 != 1:
-            n2 = int(input("Acción inválida. Intente nuevamente: "))   
-            if n2 == 1:
-                menuEstadisticas()         
     elif n == 4:
         top5.ganadores()
-        print("1. Volver atras")
-        n2 = int(input("Escriba '1' para volver atras: "))
-        if   n2 == 1:
-            menuEstadisticas()
-        while n2 != 1:
-            n2 = int(input("Acción inválida. Intente nuevamente: "))
-            if n2 == 1:
-                menuEstadisticas()            
     elif n == 5:
         top5.perdedores()
-        print("1. Volver atras")
-        n2 = int(input("Escriba '1' para volver atras: "))
-        if   n2 == 1:
-            menuEstadisticas()
-        while n2 != 1:
-            n2 = int(input("Acción inválida. Intente nuevamente: "))
-            if n2 == 1:
-                menuEstadisticas()            
     elif n == 6:
         exportarStats()
         print("El archivo 'estadisticas.csv' ya está ubicado en la carpeta 'export'")
-        menuEstadisticas()
     elif n == 7:
         main()
-    
+        return
+
+    while True:
+        try:
+            n2 = int(input("Escriba '1' para volver atras: "))
+            if n2 == 1:
+                menuEstadisticas()
+                break
+            else:
+                print("Acción inválida. Intente nuevamente:")
+        except ValueError:
+            print("❌ Ingresá un número válido.")
+
 
 main()
