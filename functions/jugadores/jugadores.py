@@ -92,7 +92,11 @@ def altaJugador():
         "partidos_jugados": 0,
         "goles": 0,
         "asistencias": 0,
-        "promedio": 0.0
+        "promedio": 0.0,
+        "ganados":0,
+        "perdidos":0,
+        "empatados":0,
+        "rachas":0
     }
 
     manejoJson.agregar_jugador(jugador)
