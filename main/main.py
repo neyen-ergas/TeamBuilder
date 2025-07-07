@@ -1,8 +1,10 @@
 import sys
 import os
+import json
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from functions.armado import seleccionJugadoresEquipo, creadorEquipos
 from functions.archivos import manejoJson
+from functions.archivos.exportarEstadisticas import exportarStats
 from functions.jugadores import jugadores as j
 from functions.ratings import top5
 from functions.partido.cargarEstadisticas import cargarEstadisticas
@@ -108,6 +110,37 @@ def crearPartido():
     n = int(input("Presione 1 para finalizar el partido: "))
 
     if n == 1:
+        print("\nIngrese el resultado final del partido")
+        goles1 = int(input("Goles del Equipo 1: "))
+        goles2 = int(input("Goles del Equipo 2: "))
+
+        RUTA_REGISTRO = os.path.join(os.path.dirname(__file__), "../src/json/registroPartido.json")
+
+        with open(RUTA_REGISTRO, "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        if goles1 == goles2:
+            print("🤝 Empate: se registra empate para todos los jugadores.")
+
+            for jugador in data["jugadores"]:
+                jugador["empatados"] += 1
+
+        else:
+            equipo_ganador = equipo1 if goles1 > goles2 else equipo2
+            equipo_perdedor = equipo2 if goles1 > goles2 else equipo1
+
+            for jugador in data["jugadores"]:
+                nombre_completo = f"{jugador['nombre']} {jugador['apellido']}"
+                if nombre_completo in equipo_ganador:
+                    jugador["ganados"] += 1
+                elif nombre_completo in equipo_perdedor:
+                    jugador["perdidos"] += 1
+
+            print("✅ Resultado registrado correctamente.")
+
+        with open(RUTA_REGISTRO, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=4, ensure_ascii=False)
+
         cargarEstadisticas()
         actualizar_estadisticas()
         print("✅ Estadísticas actualizadas correctamente.")
@@ -227,7 +260,8 @@ def menuEstadisticas():
     print("3. Top 5 más activos")
     print("4. Top 5 mas ganadores")
     print("5. Top 5 mas perdedores")
-    print("6. Volver atras")
+    print("6. Descargar estadísticas")
+    print("7. Volver atras")
 
     n = int(input("Ingresar acción: "))
     if   n == 1:
@@ -261,6 +295,8 @@ def menuEstadisticas():
         if   n2 == 1:
             menuEstadisticas()
     elif n == 6:
+        exportarStats()
+    elif n == 7:
         main()
     
 
