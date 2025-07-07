@@ -33,6 +33,7 @@ def exportarStats():
                 jugador.get("ganados", 0),
                 jugador.get("perdidos", 0),
                 jugador.get("empatados", 0),
+                jugador.get("rachas", 0),
             ]
             writer.writerow(fila)
 
