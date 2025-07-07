@@ -111,8 +111,12 @@ def crearPartido():
 
     if n == 1:
         print("\nIngrese el resultado final del partido")
-        goles1 = int(input("Goles del Equipo 1: "))
-        goles2 = int(input("Goles del Equipo 2: "))
+        try:
+            goles1 = int(input("Goles del Equipo 1: "))
+            goles2 = int(input("Goles del Equipo 2: "))
+        except ValueError:
+            print("❌ Entrada inválida. Se asignan 0 por defecto.")
+            goles1, goles2 = 0, 0
 
         RUTA_REGISTRO = os.path.join(os.path.dirname(__file__), "../src/json/registroPartido.json")
 
@@ -141,10 +145,18 @@ def crearPartido():
         with open(RUTA_REGISTRO, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=4, ensure_ascii=False)
 
-        cargarEstadisticas()
+
+        error = True
+        while error:
+            error = cargarEstadisticas(goles1, goles2)
+            if error:
+                print("Intente nuevamente.")
+
         actualizar_estadisticas()
         print("✅ Estadísticas actualizadas correctamente.")
         print("✅ Registro guardado correctamente.")
+
+        main()
         
 
 
@@ -173,9 +185,11 @@ def menuJugadores():
     print("5. Volver al menú principal")
 
     n = int(input("Ingresar acción: "))
-    while n < 0 and n > 5:
+    while n < 0 or n > 5: 
         print("Ingresar una acción válida.")
         n = int(input("Ingresar acción: "))
+
+    
 
     if n == 1:
         j.mostrar_lista()
@@ -224,7 +238,7 @@ def main():
     
 
     n = int(input("Ingresar acción: "))
-    while n < 0 and n > 3:
+    while n < 0 or n > 3:
         print("Ingresar una acción válida.")
         n = int(input("Ingresar acción: "))
 
@@ -264,38 +278,64 @@ def menuEstadisticas():
     print("7. Volver atras")
 
     n = int(input("Ingresar acción: "))
+    while n < 0 or n > 7: 
+        print("Ingresar una acción válida.")
+        n = int(input("Ingresar acción: "))
+
     if   n == 1:
         top5.goleadores()
         print("1. Volver atras")
         n2 = int(input("Escriba '1' para volver atras: "))
         if   n2 == 1:
             menuEstadisticas()
+        while n2 != 1:
+            n2 = int(input("Acción inválida. Intente nuevamente: "))
+            if n2 == 1:
+                menuEstadisticas()
     elif n == 2:
         top5.asistidores()
         print("1. Volver atras")
         n2 = int(input("Escriba '1' para volver atras: "))
         if   n2 == 1:
             menuEstadisticas()
+        while n2 != 1:
+            n2 = int(input("Acción inválida. Intente nuevamente: "))
+            if n2 == 1:
+                menuEstadisticas()        
     elif n == 3:
         top5.activos()
         print("1. Volver atras")
         n2 = int(input("Escriba '1' para volver atras: "))
         if   n2 == 1:
             menuEstadisticas()
+        while n2 != 1:
+            n2 = int(input("Acción inválida. Intente nuevamente: "))   
+            if n2 == 1:
+                menuEstadisticas()         
     elif n == 4:
         top5.ganadores()
         print("1. Volver atras")
         n2 = int(input("Escriba '1' para volver atras: "))
         if   n2 == 1:
             menuEstadisticas()
+        while n2 != 1:
+            n2 = int(input("Acción inválida. Intente nuevamente: "))
+            if n2 == 1:
+                menuEstadisticas()            
     elif n == 5:
         top5.perdedores()
         print("1. Volver atras")
         n2 = int(input("Escriba '1' para volver atras: "))
         if   n2 == 1:
             menuEstadisticas()
+        while n2 != 1:
+            n2 = int(input("Acción inválida. Intente nuevamente: "))
+            if n2 == 1:
+                menuEstadisticas()            
     elif n == 6:
         exportarStats()
+        print("El archivo 'estadisticas.csv' ya está ubicado en la carpeta 'export'")
+        menuEstadisticas()
     elif n == 7:
         main()
     
